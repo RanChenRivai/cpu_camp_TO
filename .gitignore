@@ -1,5 +1,7 @@
 /.idea/
 /precheck_results/
+/caravel/
+/mgmt_core_wrapper/
 */tmp
 */*/tmp
 *.hex*
