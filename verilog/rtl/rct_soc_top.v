@@ -1,51 +1,37 @@
 module rct_soc_top (
-`ifdef USE_POWER_PINS
+    // inout vdda1,	// User area 1 3.3V supply
+    // inout vdda2,	// User area 2 3.3V supply
+    // inout vssa1,	// User area 1 analog ground
+    // inout vssa2,	// User area 2 analog ground
     inout vccd1,	// User area 1 1.8V supply
+    // inout vccd2,	// User area 2 1.8v supply
     inout vssd1,	// User area 1 digital ground
-`endif
-	wb_clk_i,
-	user_clock2,
-	wb_rst_i,
-	wbs_cyc_i,
-	wbs_stb_i,
-	wbs_adr_i,
-	wbs_we_i,
-	wbs_dat_i,
-	wbs_sel_i,
-	wbs_dat_o,
-	wbs_ack_o,
-	analog_io,
-	la_data_in,
-	la_data_out,
-	la_oenb,
-	io_in,
-	io_out,
-	io_oeb,
-	user_irq
+    // inout vssd2,	// User area 2 digital ground
+	input wire wb_clk_i,
+	input wire user_clock2,
+	input wire wb_rst_i,
+	input wire wbs_cyc_i,
+	input wire wbs_stb_i,
+	input wire [31:0] wbs_adr_i,
+	input wire wbs_we_i,
+	input wire [31:0] wbs_dat_i,
+	input wire [3:0] wbs_sel_i,
+	output wire [31:0] wbs_dat_o,
+	output wire wbs_ack_o,
+	inout [28:0] analog_io,
+	input wire [127:0] la_data_in,
+	output wire [127:0] la_data_out,
+	input wire [127:0] la_oenb,
+	input wire [37:0] io_in,
+	output wire [37:0] io_out,
+	output wire [37:0] io_oeb,
+	output wire [2:0] user_irq
 );
-	input wire wb_clk_i;
-	input wire user_clock2;
-	input wire wb_rst_i;
-	input wire wbs_cyc_i;
-	input wire wbs_stb_i;
-	localparam rct_cfg_RCT_WB_ADR_W = 32;
-	input wire [31:0] wbs_adr_i;
-	input wire wbs_we_i;
-	localparam rct_cfg_RCT_WB_DAT_W = 32;
-	input wire [31:0] wbs_dat_i;
-	localparam rct_cfg_RCT_WB_SEL_W = 4;
-	input wire [3:0] wbs_sel_i;
-	output wire [31:0] wbs_dat_o;
-	output wire wbs_ack_o;
-	inout [28:0] analog_io;
-	input wire [127:0] la_data_in;
-	output wire [127:0] la_data_out;
-	input wire [127:0] la_oenb;
-	input wire [37:0] io_in;
-	output wire [37:0] io_out;
-	output wire [37:0] io_oeb;
-	output wire [2:0] user_irq;
+
 	parameter WB_WIDTH = 32;
+	localparam rct_cfg_RCT_WB_ADR_W = 32;
+	localparam rct_cfg_RCT_WB_DAT_W = 32;
+	localparam rct_cfg_RCT_WB_SEL_W = 4;
 	wire jtag_tck;
 	wire jtag_tms;
 	wire jtag_tdi;

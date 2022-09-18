@@ -82,13 +82,13 @@ module user_project_wrapper #(
 /* User project is instantiated  here   */
 /*--------------------------------------*/
 
-user_proj_example mprj (
-// `ifdef USE_POWER_PINS
-// 	.vccd1(vccd1),	// User area 1 1.8V power
-// 	.vssd1(vssd1),	// User area 1 digital ground
-// `endif
-
+rct_soc_top mprj (
+`ifdef USE_POWER_PINS
+    .vccd1(vccd1),	// User area 1 1.8V supply
+    .vssd1(vssd1),	// User area 1 digital ground
+`endif
     .wb_clk_i(wb_clk_i),
+    .user_clock2(user_clock2),
     .wb_rst_i(wb_rst_i),
 
     // MGMT SoC Wishbone Slave
@@ -101,7 +101,7 @@ user_proj_example mprj (
     .wbs_dat_i(wbs_dat_i),
     .wbs_ack_o(wbs_ack_o),
     .wbs_dat_o(wbs_dat_o),
-
+    .analog_io(analog_io),
     // Logic Analyzer
 
     .la_data_in(la_data_in),
@@ -115,7 +115,7 @@ user_proj_example mprj (
     .io_oeb(io_oeb),
 
     // IRQ
-    .irq(user_irq)
+    .user_irq(user_irq)
 );
 
 endmodule	// user_project_wrapper
